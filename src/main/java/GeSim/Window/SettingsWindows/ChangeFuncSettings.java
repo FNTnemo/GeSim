@@ -40,7 +40,6 @@ public class ChangeFuncSettings extends JFrame {
     JButton CancelButton;
 
     public void ui(Container container){
-        if(function.getFunction().equals(Function.Parabola)){
 
             container.setLayout(new GridLayout(5, 5, 2, 2));
 
@@ -48,95 +47,71 @@ public class ChangeFuncSettings extends JFrame {
             JLabel labelA = new JLabel(" A: ");
             JLabel labelB = new JLabel(" B: ");
             JLabel labelC = new JLabel(" C: ");
+            JLabel labelK = new JLabel(" K: ");
 
             this.x = new JTextField(5);
             this.a = new JTextField(5);
             this.b = new JTextField(5);
             this.c = new JTextField(5);
-
-            container.add(labelX);
-            container.add(x);
-
-            container.add(labelA);
-            container.add(a);
-
-            container.add(labelB);
-            container.add(b);
-
-            container.add(labelC);
-            container.add(c);
-
-            this.OKButton = new JButton("Ok");
-            OKButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    WindowUtils.getChangeFuncSettingsWindow().setVisible(false);
-                    Function.clearFunc();
-                    try {
-                        double x = Double.parseDouble(getParameterX().getText());
-                        double a = Double.parseDouble(getParameterA().getText());
-                        double b = Double.parseDouble(getParameterB().getText());
-                        double c = Double.parseDouble(getParameterC().getText());
-                        if(a == 0)
-                            a=1;
-                        function.parabola(x, a, b, c);
-                    } catch (NumberFormatException error){
-                        function.parabola(10, 1, 0, 0);
-                    }
-                    SimulationWindowEngine.getSimulationEngine().repaint();
-                }
-            });
-            this.CancelButton = new JButton("Cancel");
-            CancelButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    WindowUtils.getChangeFuncSettingsWindow().setVisible(false);
-                }
-            });
-
-            container.add(CancelButton);
-            container.add(OKButton);
-        }
-        if(function.getFunction().equals(Function.Hyperbola)){
-
-            container.setLayout(new GridLayout(4, 5, 2, 2));
-
-            JLabel labelX = new JLabel(" maxX: ");
-            JLabel labelK = new JLabel(" K: ");
-            JLabel labelA = new JLabel(" A: ");
-
-            this.x = new JTextField(5);
-            this.a = new JTextField(5);
             this.k = new JTextField(5);
 
-            container.add(labelX);
-            container.add(x);
-            container.add(labelK);
-            container.add(k);
-            container.add(labelA);
-            container.add(a);
+            if(function.getFunction().equals(Function.Parabola)){
+                container.add(labelX);
+                container.add(x);
+
+                container.add(labelA);
+                container.add(a);
+
+                container.add(labelB);
+                container.add(b);
+
+                container.add(labelC);
+                container.add(c);
+            }
+            else if(function.getFunction().equals(Function.Hyperbola)){
+                container.add(labelX);
+                container.add(x);
+
+                container.add(labelK);
+                container.add(k);
+
+                container.add(labelA);
+                container.add(a);
+            }
 
             this.OKButton = new JButton("Ok");
-
             OKButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     WindowUtils.getChangeFuncSettingsWindow().setVisible(false);
                     Function.clearFunc();
-                    try {
-                        double x = Double.parseDouble(getParameterX().getText());
-                        double k = Double.parseDouble(getParameterA().getText());
-                        double a = Double.parseDouble(getParameterB().getText());
-                        if(a == 0)
-                            a=1;
-                        function.hyperbola(x, k, a);
-                    } catch (NumberFormatException error){
-                        function.hyperbola(10, 1, 1);
+                    if(function.getFunction().equals(Function.Parabola)) {
+                        try {
+                            double x = Double.parseDouble(getParameterX().getText());
+                            double a = Double.parseDouble(getParameterA().getText());
+                            double b = Double.parseDouble(getParameterB().getText());
+                            double c = Double.parseDouble(getParameterC().getText());
+                            if (a == 0)
+                                a = 1;
+                            function.parabola(x, a, b, c);
+                        } catch (NumberFormatException error) {
+                            function.parabola(10, 1, 0, 0);
+                        }
+                    } else if(function.getFunction().equals(Function.Hyperbola)){
+                        try {
+                            double x = Double.parseDouble(getParameterX().getText());
+                            double k = Double.parseDouble(getParameterA().getText());
+                            double a = Double.parseDouble(getParameterB().getText());
+                            if(a == 0)
+                                a=1;
+                            function.hyperbola(x, k, a);
+                        } catch (NumberFormatException error){
+                            function.hyperbola(10, 1, 1);
+                        }
                     }
                     SimulationWindowEngine.getSimulationEngine().repaint();
                 }
             });
-
             this.CancelButton = new JButton("Cancel");
             CancelButton.addActionListener(new ActionListener() {
                 @Override
@@ -147,7 +122,6 @@ public class ChangeFuncSettings extends JFrame {
 
             container.add(CancelButton);
             container.add(OKButton);
-        }
     }
 
     public JTextField getParameterX() {

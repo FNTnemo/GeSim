@@ -50,6 +50,12 @@ public class SimulationWindowEngine extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 WindowUtils.openWindow(WindowUtils.getMainWindow());
                 WindowUtils.closeWindow(WindowUtils.getSimulationWindow());
+
+                if(WindowUtils.getChangeFuncSettingsWindow() != null){
+                    WindowUtils.getChangeFuncSettingsWindow().dispose();
+                    WindowUtils.changeFuncSettingsWindow = null;
+                }
+
                 WindowUtils.getMainWindow().revalidate();
             }
         });
